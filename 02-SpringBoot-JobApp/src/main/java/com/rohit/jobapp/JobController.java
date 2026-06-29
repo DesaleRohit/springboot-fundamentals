@@ -22,4 +22,5 @@ public class JobController {
     public String handleForm(JobPost jobPost) {
         return "success";
     }
+    
 }
