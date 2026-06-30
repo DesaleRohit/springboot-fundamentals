@@ -1,4 +1,4 @@
-package com.rohit.jobapp;
+package com.rohit.jobapp.controller;
 
 import com.rohit.jobapp.model.JobPost;
 import com.rohit.jobapp.service.JobService;
