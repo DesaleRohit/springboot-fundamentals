@@ -1,14 +1,22 @@
 package com.rohit.jobapp;
 
 import com.rohit.jobapp.model.JobPost;
+import com.rohit.jobapp.service.JobService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class JobController {
 
-    @GetMapping({"/","home"})
+    @Autowired
+    private JobService jobService;
+
+    @GetMapping({"/", "home"})
     public String home() {
         return "home";
     }
@@ -20,7 +28,15 @@ public class JobController {
 
     @PostMapping("handleForm")
     public String handleForm(JobPost jobPost) {
+        jobService.addJob(jobPost);
         return "success";
     }
-    
+
+    @GetMapping("viewalljobs")
+    public String viewAllJobs(Model m) {
+        List<JobPost> jobs = jobService.getAllJobs();
+        m.addAttribute("jobPosts",jobs);
+        return "viewalljobs";
+    }
+
 }
