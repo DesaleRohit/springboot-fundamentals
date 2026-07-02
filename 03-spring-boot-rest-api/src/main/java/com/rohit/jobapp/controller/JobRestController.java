@@ -3,10 +3,7 @@ package com.rohit.jobapp.controller;
 import com.rohit.jobapp.model.JobPost;
 import com.rohit.jobapp.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,13 +14,31 @@ public class JobRestController {
     private JobService jobService;
 
     @PostMapping("addjob")
-    public String addJob(@RequestBody JobPost jobPost) {
+    public JobPost addJob(@RequestBody JobPost jobPost) {
         jobService.addJob(jobPost);
-        return "Job Added";
+        return jobService.getJob(jobPost.getPostId());
     }
 
     @GetMapping("viewjobs")
     public List<JobPost> getAllJobs() {
         return jobService.getAllJobs();
+    }
+
+    @GetMapping("jobpost/{postId}")
+    public JobPost getJob(@PathVariable int postId) {
+        return jobService.getJob(postId);
+    }
+
+    @PutMapping("updatejob")
+    public JobPost updateJob(@RequestBody JobPost jobPost) {
+        jobService.updateJob(jobPost);
+        return jobService.getJob(jobPost.getPostId());
+    }
+
+
+    @DeleteMapping("deletejob/{postId}")
+    public String deleteJob(@PathVariable int postId) {
+        jobService.deleteJob(postId);
+        return "Deleted";
     }
 }
